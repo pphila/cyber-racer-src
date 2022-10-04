@@ -4,8 +4,23 @@ import { Character } from "./character.js";
 
 // Utility Logic
 
-function dieRoll(carDice) {
-  let dieRoll = Math.floor((Math.random()*carDice) + 1);
+function rollDice(carType) {
+  let diceType = 0;
+
+  if  (carType === "tuner") {
+    diceType = 5;
+  } else if  (carType === "electric")  {
+    diceType = 6;
+  } else if (carType === "muscle") {
+    diceType = 8;
+  } else if (carType === "bike") {
+    diceType = 12;
+  } else if  (carType === "monster truck") {
+    diceType = 4;
+  } else diceType = 3;
+
+  let dieRoll = Math.floor((Math.random() * diceType) + 1);
+  console.log(dieRoll);
   return dieRoll;
 }
 
@@ -17,12 +32,16 @@ export default class RaceSystem {
     this.carDice = 0;
   }
 
-  runRace(dieRoll) {
-    let carRollNum = dieRoll;
+  runRace() {
     let p1 = this.playerOne;
     let npc = this.playerTwo;
-    if (p1.carRollNum >= npc.carRollNum) {
-    return true;
+    p1.carDice = rollDice("electric");
+    npc.carDice = rollDice("monster truck");
+    console.log(p1.carDice);
+    console.log(npc.carDice);
+
+    if (p1.carDice > npc.carDice) {
+      return true;
     } else return false;
-  }
+  } 
 }
